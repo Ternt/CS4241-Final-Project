@@ -3,11 +3,10 @@
 Project link: https://final-project-jade-jays-planner.vercel.app/ 
 Explanation Video: https://youtu.be/xpKKP0cE6_M
 
-Our final project is a course planner similar to that of [WPI Planner](https://planner.wpi.edu/). It the course data from the same source, and uses that to allow the users to schedule courses, plan their degree track, and see what classes they need as prerequisites. 
-We have 3 main features, scheduling, tracking, and a course flow chart. The scheduling is akin to the WPI planner, allowing users to view section times for individual courses they select.
-The tracking page is a digital, automated version of the PDF given to students to see what classes they need to graduate. They can select courses from the various subject categories, and see if those courses fit into the requirements.
-The course flow chart shows how the courses selected in the tracking sheet fit together in terms of prerequisites, and allow the user to view all prerequisites for the course that have not been added to the tracking sheet.
-
+Our final project is a course planner similar to [WPI Planner](https://planner.wpi.edu/), using WPI's public course data to help students schedule classes, plan their degree track, and track prerequisites. We have 3 main features:
+- Scheduling is similar to that of WPI planner, allowing users to view section times for individual courses they select. Due to time constraints, our version was implemented more naively and does not have the full list of features that the WPI planner's scheduler have.
+- The tracking page is a digital, automated version of the PDF given to students to see what classes they need to graduate. They can select courses from the various subject categories, and see if those courses fit into the requirements.
+- The course flow chart shows how the courses selected in the tracking sheet fit together in terms of prerequisites, and allow the user to view all prerequisites for the course that have not been added to the tracking sheet.
 
 ## Usage instructions
 The application's home page requires you to login. Below are the credentials required to login
@@ -70,10 +69,10 @@ An additional challenge was trying to align schedules with each other. Because o
 ### Silas
 - Setup the Express server
 - Created the Tracking page, which consisted of:
-  - Creating Types for majors, course categories, and course requirements
-  - Creating the requirements for the CS major
-  - Parsing the course data to display courses based on category
-  - Creating validation system for course requirements based on selected courses
+- Creating Types for majors, course categories, and course requirements
+- Creating the requirements for the CS major
+- Parsing the course data to display courses based on category
+- Creating validation system for course requirements based on selected courses
  
 ### Noah
 - Worked on navbar (AppLayout)
