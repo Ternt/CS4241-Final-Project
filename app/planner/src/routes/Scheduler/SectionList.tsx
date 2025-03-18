@@ -1,6 +1,6 @@
 import { Text, Flex, ActionIcon } from "@mantine/core";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import React from "react";
 
 import { SectionType } from "app-packages/types/persistent.types.ts";
 import scheduleClasses from "./scheduler.module.css";
@@ -24,7 +24,7 @@ interface SectionDropdownProps {
   data: SectionType[];
 }
 function SectionDropdown({ data }: SectionDropdownProps) {
-  const [active, setActive] = useState<boolean>(true);
+  const [active, setActive] = React.useState<boolean>(true);
 
   return (
     <div>

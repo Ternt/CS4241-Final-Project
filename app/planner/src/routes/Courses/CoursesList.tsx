@@ -1,10 +1,9 @@
-import { mergeRefs, useHover, readLocalStorageValue } from "@mantine/hooks"
+import { readLocalStorageValue } from "@mantine/hooks"
 import { Plus } from "lucide-react"
 import React from "react"
 
 import { getTagFromAttributeValue } from "@/components/data-parse.util.ts"
-import courseListClasses from "./Courses.module.css"
-
+import "@/routes/Courses/Courses.css"
 
 interface CourseListProps extends React.HTMLProps<HTMLDivElement> {
   xmlDoc: XMLDocument;
@@ -12,9 +11,13 @@ interface CourseListProps extends React.HTMLProps<HTMLDivElement> {
   setAddedCourses: (list: { [key:string]: string }) => void;
   setSelectedCourse: (course: Element) => void;
 }
-export const CoursesList = React.memo(function CoursesList(
-  { xmlDoc, setAddedCourses, currentSubject, setSelectedCourse }: CourseListProps
-) {
+export const CoursesList = function CoursesList(
+  {
+    xmlDoc,
+    setAddedCourses,
+    currentSubject,
+    setSelectedCourse
+  }: CourseListProps ) {
   const courses = getTagFromAttributeValue(xmlDoc, 'abbrev', currentSubject);
 
   if (!courses) {
@@ -22,7 +25,7 @@ export const CoursesList = React.memo(function CoursesList(
   }
 
   return (
-    <div className={courseListClasses.courseContainer}>
+    <>
       {courses.map((course: Element, index: number) => {
         const name = course.getAttribute("name");
 
@@ -39,13 +42,13 @@ export const CoursesList = React.memo(function CoursesList(
               }
             }}
             setSelectedCourse={setSelectedCourse}
-            className={courseListClasses.courseItem}>
+            className={"courseItem"}>
           </CourseItem>
         )
       })}
-    </div>
+    </>
   )
-});
+};
 
 export interface CourseItemProps extends React.HTMLProps<HTMLDivElement> {
   course: Element;
@@ -56,32 +59,58 @@ export interface CourseItemProps extends React.HTMLProps<HTMLDivElement> {
   setSelectedCourse?: (course: Element) => void;
 }
 export const CourseItem = React.memo(function CourseItem(
-  { course, subject, compact, icon, clickCB, setSelectedCourse, className }: CourseItemProps
-) {
+  {
+    course,
+    subject,
+    compact,
+    icon,
+    clickCB,
+    setSelectedCourse,
+    className
+  }: CourseItemProps ) {
   const label = React.useMemo(() => course.getAttribute("name"), []);
   const courseNumber = React.useMemo(() => course.getAttribute("number"), []);
+
+  const handleOnClick = React.useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (clickCB) {
+      clickCB();
+    }
+    return;
+  }, []);
+
+  const getStatus = React.useCallback((term: string, course: Element) => {
+    const period = course.getAttribute("academic_period")
+    if (period && term === period[0]) {
+      return "available";
+    }
+
+    const enrolled = course.getAttribute("enrolled")
+    if (enrolled) {
+      const [seats, capacity] = enrolled.split("/");
+      if (seats >= capacity) {
+        return "under-waitlist";
+      }
+    }
+
+    return "not-available";
+  }, []);
 
   return (
     <div
       className={className}
       onClick={(setSelectedCourse) ? ()=>setSelectedCourse(course) : undefined}>
       <button
-        className={`${courseListClasses.courseItemButton}`}
-        onClick={(clickCB) ? (event) => {
-          event.stopPropagation();
-          clickCB();
-        } : undefined}>
+        className={"courseItemButton}"}
+        onClick={handleOnClick}>
         {(icon) ?
           icon : <Plus size={"1rem"} />
         }
       </button>
-      <a className={`
-          ${courseListClasses.courseItemSection} 
-          ${courseListClasses.courseCode}
-        `}>
+      <a className={"courseItemSection courseCode"}>
         {`${subject} ${courseNumber}`}
       </a>
-      <div className={`${courseListClasses.termRibbon}`}>
+      <div className={"termRibbon"}>
         {["A", "B", "C", "D"].map(term => {
           const status = getStatus(term, course);
           return (
@@ -94,10 +123,7 @@ export const CourseItem = React.memo(function CourseItem(
       </div>
       {compact ?
         undefined :
-        <a className={`
-          ${courseListClasses.courseItemSection} 
-          ${courseListClasses.courseTitle}
-        `}>
+        <a className={"courseItemSection courseTitle"}>
           {label}
         </a>
       }
@@ -114,54 +140,10 @@ export function TermButton({ term, status, ...props } : TermButtonProps) {
   return (
     <div
       data-status={status}
-      className={`${courseListClasses.termButton}`}
+      className={"termButton"}
       {...props}
     >
       {term}
     </div>
   );
-}
-
-function getTooltipDescription(status: string, term: string) {
-  let label = "";
-  switch (status) {
-    case "available":
-    {
-      label = `Course is available for ${term} Term`;
-    }
-      break;
-    case "not-available":
-    {
-      label = `Course not offered for ${term} Term`;
-    }
-      break;
-    case "under-waitlist":
-    {
-      label = `There are no seats left for ${term} Term `;
-    }
-      break;
-    case "closed":
-    {
-      label = "";
-    }
-      break;
-  }
-  return label;
-}
-
-function getStatus(term: string, course: Element) {
-  const period = course.getAttribute("academic_period")
-  if (period && term === period[0]) {
-    return "available";
-  }
-
-  const enrolled = course.getAttribute("enrolled")
-  if (enrolled) {
-    const [seats, capacity] = enrolled.split("/");
-    if (seats >= capacity) {
-      return "under-waitlist";
-    }
-  }
-
-  return "not-available";
 }

@@ -1,0 +1,33 @@
+.scroll-container {
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+.scroll-containerContent {
+    margin-right: -1rem;
+    padding-right: 1rem;
+    overflow: auto;
+    height: 100%;
+}
+.scrollbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 16px;
+    background-color: rgb(249 250 251);
+}
+.scrollbar-thumb {
+    box-sizing: border-box;
+    position: absolute;
+    width: calc(100% - 8px);
+    margin: 4px;
+    background-color: rgb(156 163 175);
+}
+.scrollbar-track {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
