@@ -1,0 +1,35 @@
+.panel {
+  background-color: var(--mantine-color-white);
+  display: flex;
+  flex-direction: column;
+}
+
+.panelPadding {
+  padding: var(--mantine-spacing-sm);
+}
+
+.panelHandleVertical {
+  flex: 0 0 0.2rem;
+  transition: background-color 250ms;
+  background-color: var(--mantine-color-gray-1);
+}
+.panelHandleVertical[data-resize-handle-state="hover"] {
+  background-color: var(--mantine-color-dark-1);
+}
+.panelHandleVertical[data-resize-handle-active="pointer"] {
+  transition: background-color 100ms;
+  background-color: var(--mantine-color-red-6);
+}
+
+.panelHandleHorizontal {
+  flex: 0 0 0.2rem;
+  transition: background-color 250ms;
+  background-color: var(--mantine-color-gray-1);
+}
+.panelHandleHorizontal[data-resize-handle-state="hover"] {
+  background-color: var(--mantine-color-dark-1);
+}
+.panelHandleHorizontal[data-resize-handle-active="pointer"] {
+  transition: background-color 100ms;
+  background-color: var(--mantine-color-red-6);
+}

@@ -1,8 +1,7 @@
-import { Text, TextProps } from "@mantine/core"
 import React from 'react'
 
 import { getTagsFromAttributeValue } from "@/components/data-parse.util.ts"
-import courseListClasses from "./Courses.module.css"
+import "@/routes/Courses/Courses.css"
 
 
 interface SubjectListProps extends React.HTMLProps<HTMLDivElement> {
@@ -11,34 +10,56 @@ interface SubjectListProps extends React.HTMLProps<HTMLDivElement> {
   setStoredSubject: (abbrev: any) => void;
 }
 export const SubjectList = React.memo(function SubjectList({ xmlDoc, category, setStoredSubject } : SubjectListProps) {
+  const [ collapsed, setCollapsed ] = React.useState(false);
 
   return (
     <>
       {category.map((category: string, index: number) => {
         return (
-          <div key={`${category}${index}}`}
-            className={courseListClasses.category}>
-            <a className={courseListClasses.departmentName}>
-              {category}
-            </a>
-            {getTagsFromAttributeValue(xmlDoc, 'category', category)
-              .map((subject: Element, index: number) => {
-              const name = subject.getAttribute("name");
-              const abbrev = subject.getAttribute("abbrev");
-              return (
-                <SubjectItem
-                  key={`${name}${index}`}
-                  label={name}
-                  className={courseListClasses.subjectItem}
-                  onClick={() => setStoredSubject(abbrev)}>
-                </SubjectItem>
-              );
-            })}
-          </div>
+          <CategoryItem
+            key={`${category}${index}`}
+            xmlDoc={xmlDoc}
+            category={category}
+            setStoredSubject={setStoredSubject}
+          />
         );
       })}
     </>
   );
+});
+
+export interface CategoryItemProp {
+  category: string;
+  xmlDoc: XMLDocument;
+  setStoredSubject: (abbrev: any) => void;
+}
+const CategoryItem = React.memo(function CategoryItem({ category, xmlDoc, setStoredSubject }: CategoryItemProp) {
+  const [ collapsed, setCollapsed ] = React.useState(false);
+
+  return (
+    <div className={"categoryItem"}>
+      <button
+        className={"collapsibleCategoryItem"}
+        onClick={() => setCollapsed(!collapsed)}>
+        <a className={"departmentName"}>
+          {category}
+        </a>
+      </button>
+      {(!collapsed) ? getTagsFromAttributeValue(xmlDoc, 'category', category)
+        .map((subject: Element, index: number) => {
+          const name = subject.getAttribute("name");
+          const abbrev = subject.getAttribute("abbrev");
+          return (
+            <SubjectItem
+              key={`${name}${index}`}
+              label={name}
+              className={"subjectItem"}
+              onClick={() => setStoredSubject(abbrev)}>
+            </SubjectItem>
+          );
+        }) : undefined}
+    </div>
+  )
 });
 
 export interface SubjectItemProps {

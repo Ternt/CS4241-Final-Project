@@ -7,7 +7,6 @@ import { CourseProvider } from "@/components/CourseProvider.tsx";
 import { StateProvider } from "@/components/StateProvider.tsx";
 import { AppLayout } from "@/components/AppLayout/AppLayout.tsx";
 import { Courses } from "@/routes/Courses/Courses.tsx";
-import { Scheduler } from "@/routes/Scheduler/Scheduler.tsx";
 
 const theme = createTheme({
   activeClassName: "",
@@ -52,17 +51,17 @@ export default function App() {
   return (
     <MantineProvider theme={theme}>
       <QueryClientProvider client={client}>
-        <StateProvider>
           <CourseProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<AppLayout />}>
-                  <Route path={"/"} index element={<Courses />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
+            <StateProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route element={<AppLayout/>}>
+                    <Route path="/" element={<Courses/>}/>
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </StateProvider>
           </CourseProvider>
-        </StateProvider>
       </QueryClientProvider>
     </MantineProvider>
   );

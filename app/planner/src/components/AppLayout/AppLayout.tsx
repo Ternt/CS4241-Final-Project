@@ -1,14 +1,15 @@
-import { AppShell, Group, Title, UnstyledButton } from "@mantine/core";
+import { Group, Title, UnstyledButton } from "@mantine/core";
 import { Outlet, NavLink } from "react-router-dom";
 import React from 'react';
 import cx from "clsx";
 
-import classes from "./appLayout.module.css";
+import "./AppLayout.css";
+
 
 export function AppLayout() {
   return (
-    <AppShell withBorder={false} header={{ height: "50", offset: true }}>
-      <AppShell.Header className={classes.header}>
+    <>
+      <header className={"header"}>
         <Group>
           <UnstyledButton
             renderRoot={({ className, ...others }) => (
@@ -20,10 +21,10 @@ export function AppLayout() {
             </Title>
           </UnstyledButton>
         </Group>
-        <div className={classes.headerGroup}>
-          <div className={classes.headerMenu}>
+        <div className={"headerGroup"}>
+          <div className={"headerMenu"}>
             <UnstyledButton
-              className={classes.menuButton}
+              className={"menuButton"}
               renderRoot={({ className, ...others }) => (
                 <NavLink to={"/"} className={cx(className)} {...others} />
               )}
@@ -33,9 +34,9 @@ export function AppLayout() {
               </Title>
             </UnstyledButton>
           </div>
-          <div className={classes.headerMenu}>
+          <div className={"headerMenu"}>
             <UnstyledButton
-              className={classes.menuButton}
+              className={"menuButton"}
               renderRoot={({ className, ...others }) => (
                 <NavLink
                   to={"/scheduler"}
@@ -50,10 +51,10 @@ export function AppLayout() {
             </UnstyledButton>
           </div>
         </div>
-      </AppShell.Header>
-      <AppShell.Main className={classes.main}>
-        <Outlet />
-      </AppShell.Main>
-    </AppShell>
+      </header>
+      <main className={"main"}>
+        <Outlet/>
+      </main>
+    </>
   );
 }

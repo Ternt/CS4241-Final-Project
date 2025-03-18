@@ -4,12 +4,14 @@ import React from 'react';
 
 import { useCourseContext } from "@/components/CourseProvider.tsx"
 import { useStateContext } from "@/components/StateProvider.tsx"
+import { Scrollbar } from "@/components/Scrollbar/Scrollbar.tsx"
 import { SubjectList } from "./SubjectList"
 import { CoursesList } from "./CoursesList"
 import { CourseInfo } from "./CourseInfo"
 import { AddedCoursesList } from "@/routes/Courses/AddedCoursesList.tsx";
-import panelClasses from "@/routes/panel.module.css"
-import courseListClasses from "@/routes/Courses/Courses.module.css"
+
+import "@/routes/Panel.css"
+import "@/routes/Courses/Courses.css"
 
 export function Courses() {
   const { xmlDoc, category } = useCourseContext();
@@ -18,63 +20,60 @@ export function Courses() {
   const [ selectedCourse, setSelectedCourse ] = React.useState<Element | null>(null);
 
   return (
-    <PanelGroup
-      style={{
-        maxHeight:
-          "calc(100vh - var(--app-shell-header-height) - 2 * var(--app-shell-padding))",
-        gap: "calc(var(--app-shell-padding)/4)",
-      }}
-      direction={"horizontal"}>
+    <PanelGroup direction={"horizontal"}>
+        <Panel
+          style={{ overflow: "auto" }}
+          className={"panel"}
+          defaultSize={15}
+          minSize={10}
+          order={1}>
+          <Scrollbar maxHeight={"calc(100vh - 50px)"}>
+            <SubjectList xmlDoc={xmlDoc} category={category} setStoredSubject={setStoredSubject}/>
+          </Scrollbar>
+        </Panel>
+      <PanelResizeHandle className={"panelHandleVertical"}/>
       <Panel
-        style={{ overflow: "auto" }}
-        className={`
-          ${panelClasses.panel} 
-          ${courseListClasses.subjectListContainer}
-        `}
-        defaultSize={15}
-        order={1}>
-        <SubjectList xmlDoc={xmlDoc} category={category} setStoredSubject={setStoredSubject} />
-      </Panel>
-      <PanelResizeHandle className={panelClasses.panelHandleVertical} />
-      <Panel
-        style={{ overflow: "auto" }}
-        className={panelClasses.panel}
+        className={"panel"}
         order={2}>
-        <CoursesList
-          xmlDoc={xmlDoc}
-          setAddedCourses={setAddedCourses}
-          currentSubject={currentSubject}
-          setSelectedCourse={setSelectedCourse}
-        />
+        <Scrollbar maxHeight={"calc(100vh - 50px)"}>
+          <CoursesList
+            xmlDoc={xmlDoc}
+            setAddedCourses={setAddedCourses}
+            currentSubject={currentSubject}
+            setSelectedCourse={setSelectedCourse}
+          />
+        </Scrollbar>
       </Panel>
-      <PanelResizeHandle className={panelClasses.panelHandleVertical} />
+      <PanelResizeHandle className={"panelHandleVertical"}/>
       <Panel
+        style={{ overflow: "auto "}}
         defaultSize={15}
         order={3}>
         <PanelGroup
           style={{ gap: "calc(var(--app-shell-padding)/4)" }}
           direction={"vertical"}>
           <Panel
-            className={`
-              ${panelClasses.panel} 
-              ${courseListClasses.courseInfoContainer}
-            `}
+            style={{ overflow: "auto "}}
+            className={"panel courseInfoContainer"}
             defaultSize={70}
             order={4}>
-            <CourseInfo
-              selectedCourse={selectedCourse}
-            />
+            <Scrollbar maxHeight={"100%"}>
+              <CourseInfo selectedCourse={selectedCourse}/>
+            </Scrollbar>
           </Panel>
-          <PanelResizeHandle className={panelClasses.panelHandleHorizontal} />
+          <PanelResizeHandle className={"panelHandleHorizontal"}/>
           <Panel
-            className={panelClasses.panel}
+            style={{ overflow: "auto "}}
+            className={"panel"}
             defaultSize={30}
             order={5}>
-            <AddedCoursesList
-              subject={currentSubject}
-              setAddedCourses={setAddedCourses}
-              setSelectedCourse={setSelectedCourse}
-            />
+            <Scrollbar maxHeight={"calc(100vh - 50px)"}>
+              <AddedCoursesList
+                subject={currentSubject}
+                setAddedCourses={setAddedCourses}
+                setSelectedCourse={setSelectedCourse}
+              />
+            </Scrollbar>
           </Panel>
         </PanelGroup>
       </Panel>

@@ -3,7 +3,7 @@ import { Minus } from 'lucide-react'
 import React from 'react'
 
 import { CourseItem } from './CoursesList'
-import courseListClasses from "@/routes/Courses/Courses.module.css";
+import "@/routes/Courses/Courses.css";
 
 interface AddedCoursesListProps {
   subject: string
@@ -32,7 +32,7 @@ export function AddedCoursesList({ subject, setAddedCourses, setSelectedCourse }
                 setAddedCourses(list);
               }
             }}
-            className={courseListClasses.courseItem}>
+            className={"courseItem"}>
           </CourseItem>
         )
       })}

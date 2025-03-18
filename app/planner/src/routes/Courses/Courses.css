@@ -8,7 +8,21 @@
     padding-inline: 0.25rem;
 }
 
-.category {
+.collapsibleCategoryItem {
+    background: inherit;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border-radius: 0.25em;
+    text-align: left;
+}
+.collapsibleCategoryItem:hover {
+    background-color: var(--mantine-color-gray-1);
+    cursor: pointer;
+}
+
+.categoryItem {
     padding-bottom: 0.5rem;
 }
 
@@ -21,10 +35,11 @@
 
 .subjectItem {
     font-size: calc(0.85rem * var(--mantine-scale));
-    margin-inline-start: 1em;
-    padding-inline-start: 0.2em;
+    padding-inline-start: 1.2em;
     border-radius: 0.25em;
     line-height: calc(1.2rem * var(--mantine-scale));
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
 }
 .subjectItem:hover {
     background-color: var(--mantine-color-gray-1);
@@ -40,9 +55,8 @@
 .courseItem {
     height: 2.5rem;
     width: 100%;
-    padding: 0 calc(0.75rem * var(--mantine-scale)) 0
-    calc(0.75rem * var(--mantine-scale));
-    margin: 0 0 0.4rem 0;
+    padding: 0 calc(0.75rem * var(--mantine-scale))
+             0 calc(0.75rem * var(--mantine-scale));
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -60,6 +74,13 @@
 .courseItem[data-active] {
     background-color: var(--mantine-color-gray-2);
     transition: background-color 0ms;
+}
+.courseItem:nth-child(even):hover {
+    background-color: #f0f0f2;
+}
+.courseItem:hover {
+    background-color: #f0f0f0;
+    border-color: var(--mantine-color-gray-2);
 }
 
 .courseItemButton {
@@ -107,7 +128,7 @@
     padding: 0.3rem;
     cursor: default;
     font-size: calc(0.85rem * var(--mantine-scale));
-    border: 1px solid var(--mantine-color-white);
+    border: 1px solid rgba(0, 0, 0, 0);
     border-radius: 6px;
 }
 .termButton[data-status="not-available"] {
