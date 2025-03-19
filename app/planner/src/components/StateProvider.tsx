@@ -1,6 +1,5 @@
-import { useContext, createContext, ReactNode } from "react";
+import React, { useContext, createContext, ReactNode } from "react";
 import { useLocalStorage } from "@mantine/hooks";
-import React from 'react';
 
 
 const StateContext = createContext<any>(null);

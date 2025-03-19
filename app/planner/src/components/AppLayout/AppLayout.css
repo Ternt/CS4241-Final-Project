@@ -41,6 +41,7 @@
 .main {
   max-height: calc(100vh - 50px);
   height: calc(100vh - 50px);
+  padding: 0.5rem;
   background-color: var(--mantine-color-dark-7, #0f0f0f);
 }
 

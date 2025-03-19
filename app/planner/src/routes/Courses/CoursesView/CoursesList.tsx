@@ -19,6 +19,15 @@ export const CoursesList = function CoursesList(
     setSelectedCourse
   }: CourseListProps ) {
   const courses = getTagFromAttributeValue(xmlDoc, 'abbrev', currentSubject);
+  const [ activeCourse, setActiveCourse ] = React.useState('');
+
+  const handleOnClick = (name: string, course: Element) => {
+    const newValue = readLocalStorageValue<{ [key:string]: string }>({key: 'added_courses'});
+    if (name && !newValue[name]) {
+      newValue[name] = course.outerHTML;
+      setAddedCourses(newValue);
+    }
+  }
 
   if (!courses) {
     return <></>
@@ -27,21 +36,19 @@ export const CoursesList = function CoursesList(
   return (
     <>
       {courses.map((course: Element, index: number) => {
-        const name = course.getAttribute("name");
+        const name = course.getAttribute("name") ?? 'N/A';
 
         return (
           <CourseItem
             key={`${name}${index}`}
             subject={currentSubject}
             course={course}
-            clickCB={() => {
-              const newValue = readLocalStorageValue<{ [key:string]: string }>({key: 'added_courses'});
-              if (name && !newValue[name]) {
-                newValue[name] = course.outerHTML;
-                setAddedCourses(newValue);
-              }
+            isActive={activeCourse === name}
+            clickCB={() => handleOnClick(name, course)}
+            onClick={() => {
+              setSelectedCourse(course);
+              setActiveCourse(name);
             }}
-            setSelectedCourse={setSelectedCourse}
             className={"courseItem"}>
           </CourseItem>
         )
@@ -52,32 +59,23 @@ export const CoursesList = function CoursesList(
 
 export interface CourseItemProps extends React.HTMLProps<HTMLDivElement> {
   course: Element;
-  subject: string;
   compact?: boolean;
   icon?: React.ReactNode;
-  clickCB?: () => void;
-  setSelectedCourse?: (course: Element) => void;
+  isActive?: boolean;
+  clickCB: () => void;
 }
 export const CourseItem = React.memo(function CourseItem(
   {
     course,
-    subject,
     compact,
     icon,
+    isActive,
     clickCB,
-    setSelectedCourse,
+    onClick,
     className
   }: CourseItemProps ) {
   const label = React.useMemo(() => course.getAttribute("name"), []);
-  const courseNumber = React.useMemo(() => course.getAttribute("number"), []);
-
-  const handleOnClick = React.useCallback((event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (clickCB) {
-      clickCB();
-    }
-    return;
-  }, []);
+  const courseCode = React.useMemo(() => course.getAttribute("code"), []);
 
   const getStatus = React.useCallback((term: string, course: Element) => {
     const period = course.getAttribute("academic_period")
@@ -98,31 +96,35 @@ export const CourseItem = React.memo(function CourseItem(
 
   return (
     <div
-      className={className}
-      onClick={(setSelectedCourse) ? ()=>setSelectedCourse(course) : undefined}>
+      data-active={isActive}
+      onClick={onClick}
+      className={className}>
       <button
         className={"courseItemButton}"}
-        onClick={handleOnClick}>
-        {(icon) ?
-          icon : <Plus size={"1rem"} />
+        onClick={clickCB}>
+        {
+          (icon) ? icon : <Plus size={"1rem"} />
         }
       </button>
       <a className={"courseItemSection courseCode"}>
-        {`${subject} ${courseNumber}`}
+        {`${courseCode}`}
       </a>
       <div className={"termRibbon"}>
-        {["A", "B", "C", "D"].map(term => {
-          const status = getStatus(term, course);
-          return (
-            <TermButton
-              key={`${label}${subject}${courseNumber}${term}`}
-              status={status}
-              term={term}/>
-          )
-        })}
+        {
+          ["A", "B", "C", "D"].map(term => {
+            const status = getStatus(term, course);
+            return (
+              <TermButton
+                key={`${label}${courseCode}${term}`}
+                status={status}
+                term={term}
+              />
+            )
+          })
+        }
       </div>
-      {compact ?
-        undefined :
+      {
+        compact ? undefined :
         <a className={"courseItemSection courseTitle"}>
           {label}
         </a>

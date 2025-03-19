@@ -1,3 +1,4 @@
+import { readLocalStorageValue } from "@mantine/hooks";
 import React from 'react'
 
 import { getTagsFromAttributeValue } from "@/components/data-parse.util.ts"
@@ -10,30 +11,42 @@ interface SubjectListProps extends React.HTMLProps<HTMLDivElement> {
   setStoredSubject: (abbrev: any) => void;
 }
 export const SubjectList = React.memo(function SubjectList({ xmlDoc, category, setStoredSubject } : SubjectListProps) {
-  const [ collapsed, setCollapsed ] = React.useState(false);
+  const currentSubject = readLocalStorageValue<string>({ key: 'subject' });
+  const [ activeSubject, setActiveSubject ] = React.useState(currentSubject);
 
   return (
-    <>
+    <div className={"subjectListContainer"}>
       {category.map((category: string, index: number) => {
         return (
           <CategoryItem
             key={`${category}${index}`}
             xmlDoc={xmlDoc}
             category={category}
+            activeSubject={activeSubject}
+            setActiveSubject={setActiveSubject}
             setStoredSubject={setStoredSubject}
           />
         );
       })}
-    </>
+    </div>
   );
 });
 
 export interface CategoryItemProp {
   category: string;
   xmlDoc: XMLDocument;
+  activeSubject: string;
+  setActiveSubject: (abbrev: any) => void;
   setStoredSubject: (abbrev: any) => void;
 }
-const CategoryItem = React.memo(function CategoryItem({ category, xmlDoc, setStoredSubject }: CategoryItemProp) {
+const CategoryItem = React.memo(function CategoryItem(
+  {
+    category,
+    xmlDoc,
+    activeSubject,
+    setActiveSubject,
+    setStoredSubject,
+  }: CategoryItemProp) {
   const [ collapsed, setCollapsed ] = React.useState(false);
 
   return (
@@ -53,8 +66,12 @@ const CategoryItem = React.memo(function CategoryItem({ category, xmlDoc, setSto
             <SubjectItem
               key={`${name}${index}`}
               label={name}
+              isActive={activeSubject === abbrev}
               className={"subjectItem"}
-              onClick={() => setStoredSubject(abbrev)}>
+              onClick={() => {
+                setStoredSubject(abbrev);
+                setActiveSubject(abbrev);
+              }}>
             </SubjectItem>
           );
         }) : undefined}
@@ -65,11 +82,13 @@ const CategoryItem = React.memo(function CategoryItem({ category, xmlDoc, setSto
 export interface SubjectItemProps {
   className?: string;
   label: string | null | undefined;
-  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  isActive: boolean;
+  onClick: () => void;
 }
-const SubjectItem = React.memo(function SubjectItem({ label, className, onClick, ...props }: SubjectItemProps) {
+const SubjectItem = React.memo(function SubjectItem({ label, isActive, className, onClick, ...props }: SubjectItemProps) {
   return (
     <div
+      data-status={isActive}
       className={`${className}`}
       onClick={onClick}
       {...props}>

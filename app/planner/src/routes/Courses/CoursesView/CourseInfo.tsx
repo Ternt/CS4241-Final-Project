@@ -12,8 +12,12 @@ export const CourseInfo = React.memo(function CourseInfo({
 
   return (
     <>
-      <Title order={5}>{name}</Title>
-      <Text>
+      <Title
+        order={5}
+        className={"descriptionTitle"}>
+        {name}
+      </Title>
+      <Text className={"descriptionText"}>
         {description}
       </Text>
     </>

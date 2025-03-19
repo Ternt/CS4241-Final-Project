@@ -62,7 +62,7 @@ async function getCourseData(subject_id: string) {
       return {
         $description: course.description,
         $name: course.title,
-        $number: course.code,
+        $code: course_id,
         $credits: course.credits,
         $enrolled: course.enrolled_capacity,
         $waitlist: course.waitlist_capacity,

@@ -1,4 +1,4 @@
-import { useContext, createContext, ReactNode } from "react";
+import React, { useContext, createContext, ReactNode } from "react";
 
 import { fetchCourseXML } from "@/hooks/data-fetches.ts";
 import { getAll, getAllSubjectsCategory } from "@/components/data-parse.util.ts"
@@ -27,7 +27,7 @@ export const CourseProvider = ({ children }: CourseProviderProps) => {
   }
 
   const xmlDoc = new DOMParser().parseFromString(data, "text/xml");
-  const subjects = getAll(xmlDoc);
+  const subjects = getAll(xmlDoc, "subject");
   const category = getAllSubjectsCategory(xmlDoc);
 
   return (
