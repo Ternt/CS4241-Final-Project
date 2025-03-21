@@ -12,6 +12,10 @@ interface AddedCoursesListProps {
 export function AddedCoursesList({ setAddedCourses, setSelectedCourse } : AddedCoursesListProps) {
   const list = readLocalStorageValue<{ [key:string]: string }>({ key: 'added_courses' });
 
+  if (!list) {
+    return <></>;
+  }
+
   const handleRemoveCourse = (name: string, list: { [key:string]: string }) => {
     if (name && list[name]) {
       delete list[name];

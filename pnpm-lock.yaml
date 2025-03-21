@@ -87,6 +87,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.66.9
         version: 5.67.1(react@18.3.1)
+      '@tanstack/react-table':
+        specifier: ^8.21.2
+        version: 8.21.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.8.1
         version: 1.8.1
@@ -916,6 +919,17 @@ packages:
     resolution: {integrity: sha512-fH5u4JLwB6A+wLFdi8wWBWAYoJV5deYif2OveJ26ktAWjU499uvVFS1wPWnyEyq5LvZX1MZInvv9QRaIZANRaQ==}
     peerDependencies:
       react: ^18 || ^19
+
+  '@tanstack/react-table@8.21.2':
+    resolution: {integrity: sha512-11tNlEDTdIhMJba2RBH+ecJ9l1zgS2kjmexDPAraulc8jeNA4xocSNeyzextT0XJyASil4XsCYlJmf5jEWAtYg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  '@tanstack/table-core@8.21.2':
+    resolution: {integrity: sha512-uvXk/U4cBiFMxt+p9/G7yUWI/UbHYbyghLCjlpWZ3mLeIZiUBSKcUnw9UnKkdRz7Z/N4UBuFLWQdJCjUe7HjvA==}
+    engines: {node: '>=12'}
 
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -3101,6 +3115,14 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.67.1
       react: 18.3.1
+
+  '@tanstack/react-table@8.21.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@tanstack/table-core': 8.21.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  '@tanstack/table-core@8.21.2': {}
 
   '@types/body-parser@1.19.5':
     dependencies:

@@ -51,17 +51,13 @@ export default function App() {
   return (
     <MantineProvider theme={theme}>
       <QueryClientProvider client={client}>
-          <CourseProvider>
-            <StateProvider>
-              <BrowserRouter>
-                <Routes>
-                  <Route element={<AppLayout/>}>
-                    <Route path="/" element={<Courses/>}/>
-                  </Route>
-                </Routes>
-              </BrowserRouter>
-            </StateProvider>
-          </CourseProvider>
+        <StateProvider>
+          <BrowserRouter>
+            <Route element={<AppLayout/>}>
+              <Route index element={<Courses/>}/>
+            </Route>
+          </BrowserRouter>
+        </StateProvider>
       </QueryClientProvider>
     </MantineProvider>
   );

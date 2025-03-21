@@ -35,24 +35,6 @@ export const CoursesList = function CoursesList(
 
   return (
     <>
-      {courses.map((course: Element, index: number) => {
-        const name = course.getAttribute("name") ?? 'N/A';
-
-        return (
-          <CourseItem
-            key={`${name}${index}`}
-            subject={currentSubject}
-            course={course}
-            isActive={activeCourse === name}
-            clickCB={() => handleOnClick(name, course)}
-            onClick={() => {
-              setSelectedCourse(course);
-              setActiveCourse(name);
-            }}
-            className={"courseItem"}>
-          </CourseItem>
-        )
-      })}
     </>
   )
 };
