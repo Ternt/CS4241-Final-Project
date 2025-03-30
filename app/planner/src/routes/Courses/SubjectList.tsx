@@ -1,27 +1,38 @@
 import { readLocalStorageValue } from "@mantine/hooks";
 import React from 'react'
 
-import { getTagsFromAttributeValue } from "@/components/data-parse.util.ts"
+import { CategoryType, SubjectType } from "@repo/app-commons/types";
+import { fetchAllSubjects } from "@/hooks/data-fetches"
 import "@/routes/Courses/Courses.css"
 
 
-interface SubjectListProps extends React.HTMLProps<HTMLDivElement> {
-  xmlDoc: XMLDocument;
-  category: any;
-  setStoredSubject: (abbrev: any) => void;
+export interface SubjectListProp {
+  setStoredSubject: (val: string) => void;
 }
-export const SubjectList = React.memo(function SubjectList({ xmlDoc, category, setStoredSubject } : SubjectListProps) {
+export const SubjectList = React.memo((
+  {
+    setStoredSubject
+  } : SubjectListProp) => {
+  const { status, data, error } = fetchAllSubjects();
   const currentSubject = readLocalStorageValue<string>({ key: 'subject' });
   const [ activeSubject, setActiveSubject ] = React.useState(currentSubject);
 
+  if ( status === "pending" ) {
+    return <div>Loading...</div>
+  }
+
+  if ( status === "error" ) {
+    return <div>Error {error.message}</div>
+  }
+
   return (
     <div className={"subjectListContainer"}>
-      {category.map((category: string, index: number) => {
+      {data.map((categoryObject: CategoryType) => {
         return (
           <CategoryItem
-            key={`${category}${index}`}
-            xmlDoc={xmlDoc}
-            category={category}
+            key={`${categoryObject.category}`}
+            category={categoryObject.category}
+            subjects={categoryObject.subjects}
             activeSubject={activeSubject}
             setActiveSubject={setActiveSubject}
             setStoredSubject={setStoredSubject}
@@ -32,21 +43,22 @@ export const SubjectList = React.memo(function SubjectList({ xmlDoc, category, s
   );
 });
 
+
 export interface CategoryItemProp {
   category: string;
-  xmlDoc: XMLDocument;
+  subjects: SubjectType[];
   activeSubject: string;
-  setActiveSubject: (abbrev: any) => void;
-  setStoredSubject: (abbrev: any) => void;
+  setActiveSubject: (val: string) => void;
+  setStoredSubject: (val: string) => void;
 }
-const CategoryItem = React.memo(function CategoryItem(
+const CategoryItem = React.memo((
   {
     category,
-    xmlDoc,
+    subjects,
     activeSubject,
     setActiveSubject,
     setStoredSubject,
-  }: CategoryItemProp) {
+  } : CategoryItemProp) => {
   const [ collapsed, setCollapsed ] = React.useState(false);
 
   return (
@@ -58,20 +70,19 @@ const CategoryItem = React.memo(function CategoryItem(
           {category}
         </a>
       </button>
-      {(!collapsed) ? getTagsFromAttributeValue(xmlDoc, 'category', category)
-        .map((subject: Element, index: number) => {
-          const name = subject.getAttribute("name");
-          const abbrev = subject.getAttribute("abbrev");
+      {(!collapsed) ?
+        subjects.map((subject, index) => {
           return (
             <SubjectItem
-              key={`${name}${index}`}
-              label={name}
-              isActive={activeSubject === abbrev}
+              key={`${subject.type}${index}`}
+              label={subject.type}
+              isActive={activeSubject === subject.code}
               className={"subjectItem"}
               onClick={() => {
-                setStoredSubject(abbrev);
-                setActiveSubject(abbrev);
-              }}>
+                setStoredSubject(subject.code);
+                setActiveSubject(subject.code);
+              }}
+            >
             </SubjectItem>
           );
         }) : undefined}
@@ -79,19 +90,25 @@ const CategoryItem = React.memo(function CategoryItem(
   )
 });
 
+
 export interface SubjectItemProps {
-  className?: string;
   label: string | null | undefined;
   isActive: boolean;
+  className: string;
   onClick: () => void;
 }
-const SubjectItem = React.memo(function SubjectItem({ label, isActive, className, onClick, ...props }: SubjectItemProps) {
+const SubjectItem = React.memo((
+  {
+    label,
+    isActive,
+    className,
+    onClick,
+  }: SubjectItemProps) => {
   return (
     <div
       data-status={isActive}
-      className={`${className}`}
-      onClick={onClick}
-      {...props}>
+      className={className}
+      onClick={onClick}>
       {label}
     </div>
   )

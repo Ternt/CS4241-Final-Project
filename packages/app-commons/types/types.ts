@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 export type SetLocalStorageValue<T> = (val: T | ((prevState: T) => T)) => void;
 
@@ -13,6 +13,12 @@ export type TablesType = {
   [key: string]: Array<TableSectionDataType[]>;
 };
 
+export type Map = { [key:string] : string };
+
+export interface CategoryType {
+  category: string;
+  subjects: SubjectType[];
+}
 
 export interface SectionType {
   _id?: Types.ObjectId;

@@ -1,11 +1,13 @@
 import React, { useContext, createContext } from "react";
 import { useLocalStorage } from "@mantine/hooks";
 
+import { Map } from '@repo/app-commons/types'
+
 type AppDataContextType = {
   currentSubject: string,
-  setStoredSubject: (val: never) => void,
-  addedCourses: { [key: string]: string },
-  setAddedCourses: (val: never) => void,
+  setStoredSubject: (val: string) => void,
+  addedCourses: Map,
+  setAddedCourses: (val: Map) => void,
 }
 
 const AppDataContext = createContext<AppDataContextType | undefined>(undefined);
@@ -17,12 +19,12 @@ const useAppData = () => {
   return useContext(AppDataContext);
 };
 
-const AppDataProvider: React.FC<any> = ({ children }) => {
+const AppDataProvider: React.FC<never> = ({ children }) => {
   const [ storedSubject, setStoredSubject ] = useLocalStorage({
     key: "subject",
     defaultValue: "CS",
   });
-  const [ addedCourses, setAddedCourses ] = useLocalStorage<{ [key:string]: string }>({
+  const [ addedCourses, setAddedCourses ] = useLocalStorage<Map>({
     key: "added_courses",
     defaultValue: {},
   });

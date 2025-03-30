@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv/config";
+import "dotenv/config";
 
 export function ConnectDB(database_url: string | undefined) {
   if (!database_url) throw new Error("MongoDB URL is missing");

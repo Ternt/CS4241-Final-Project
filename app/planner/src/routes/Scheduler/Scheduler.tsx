@@ -3,8 +3,8 @@ import { TimeTable } from "@/components/TimeTable/TimeTable.tsx";
 import React from "react";
 
 import { ClientCourseType } from "app-packages/types/persistent.types.ts";
-import { getAll } from "@/components/data-parse.util.ts"
-import { useStateContext } from "@/components/StateProvider.tsx";
+import { getAll } from "@/hooks/data-parse.util.ts"
+import { useStateContext } from "@/components/Contexts/StateProvider.tsx";
 import { SectionList } from "@/routes/Scheduler/SectionList";
 import scheduleClasses from "./scheduler.module.css";
 

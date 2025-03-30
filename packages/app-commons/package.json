@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "exports": {
-    "./persistent-types": "./types/persitent.types.ts",
+    "./types": "./types/types.ts",
     "./css": "./util/css.utils.ts"
   },
   "scripts": {

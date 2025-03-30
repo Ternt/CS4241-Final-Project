@@ -1,7 +1,7 @@
 import React, { useContext, createContext, ReactNode } from "react";
 
 import { fetchCourseXML } from "@/hooks/data-fetches.ts";
-import { getAll, getAllSubjectsCategory } from "@/components/data-parse.util.ts"
+import { getAll, getAllSubjectsCategory } from "@/hooks/data-parse.util.ts"
 
 const CourseContext = createContext<any>(null);
 

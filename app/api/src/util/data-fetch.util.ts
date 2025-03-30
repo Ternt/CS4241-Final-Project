@@ -4,10 +4,20 @@ import Section from '../persistent/SectionPersistence';
 
 import { SubjectFilterQuery, CourseFilterQuery, SectionFilterQuery } from '../types';
 
-export async function querySubjectData(QueryObject:SubjectFilterQuery) {
+export async function getDistinctFieldValues(field: string) {
+  const queryResult = Subject.find().distinct(field);
+
+  if (!queryResult.size) {
+    throw new Error('Field have no values');
+  }
+
+  return queryResult;
+}
+
+export async function querySubjectData(QueryObject:SubjectFilterQuery, projection?: object) {
   const queryResult = Subject.find(
     QueryObject,
-    { _id: 0, __v: 0 },
+    { _id: 0, __v: 0, ...projection },
     { lean: true },
   );
 

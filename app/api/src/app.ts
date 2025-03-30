@@ -2,9 +2,9 @@ import express from "express";
 import logger from "morgan";
 import cors from "cors";
 
-import { ConnectDB } from "./util/DatabaseUtil";
+import { ConnectDB } from "./util/database.util";
 import adminRoutes from "./routes/adminRouter";
-import subjectRoutes from "./routes/subjectRouter";
+import dataRoutes from "./routes/dataRouter";
 
 export const createServer = ({ DATABASE_URL } : { [key:string]: string }): express.Express => {
   const app = express();
@@ -16,7 +16,7 @@ export const createServer = ({ DATABASE_URL } : { [key:string]: string }): expre
     .use(express.urlencoded({ extended: true }))
     .use(cors())
     .use("/api/admin/", adminRoutes)
-    .use("/api/subject/", subjectRoutes);
+    .use("/api/data/", dataRoutes);
 
   app.get('/health-check', (req, res) => {
     res.status(200).send('connected');
