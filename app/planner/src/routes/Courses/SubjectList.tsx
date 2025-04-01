@@ -3,7 +3,7 @@ import React from 'react'
 
 import { CategoryType, SubjectType } from "@repo/app-commons/types";
 import { fetchAllSubjects } from "@/hooks/data-fetches"
-import "@/routes/Courses/Courses.css"
+import "@/routes/Courses/SubjectList.css"
 
 
 export interface SubjectListProp {

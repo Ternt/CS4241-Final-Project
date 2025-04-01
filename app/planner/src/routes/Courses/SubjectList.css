@@ -1,0 +1,48 @@
+.subjectListContainer {
+    padding-top: 0.5rem;
+    padding-bottom: 2rem;
+    padding-inline: 0.5rem;
+}
+.collapsibleCategoryItem {
+    background: inherit;
+    border: none;
+    padding: 0;
+    padding-inline: 0.5rem;
+    margin: 0;
+    width: 100%;
+    border-radius: 0.25em;
+    text-align: left;
+}
+.collapsibleCategoryItem:hover {
+    background-color: var(--mantine-color-gray-1);
+    cursor: pointer;
+}
+.categoryItem {
+    padding-bottom: 0.5rem;
+}
+.departmentName {
+    font-weight: 700;
+    font-size: calc(0.95rem * var(--mantine-scale));
+    line-height: calc(1.2rem * var(--mantine-scale));
+}
+.subjectItem {
+    font-size: calc(0.85rem * var(--mantine-scale));
+    padding-inline-start: 1.2em;
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+    border-radius: 0.25em;
+    line-height: calc(1.2rem * var(--mantine-scale));
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
+.subjectItem:hover {
+    background-color: var(--mantine-color-gray-1);
+    cursor: pointer;
+}
+.subjectItem[data-status="true"] {
+    transition-duration: 150ms, 50ms;
+    transition-property: background-color, color;
+    transition-timing-function: ease;
+    background-color: rgba(232, 37, 66, 0.85);
+    color: var(--mantine-color-white);
+}

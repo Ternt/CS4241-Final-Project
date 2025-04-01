@@ -10,7 +10,7 @@ export function AppLayout() {
   return (
     <>
       <header className={"header"}>
-        <Group>
+        <nav className={"nav"}>
           <UnstyledButton
             renderRoot={({ className, ...others }) => (
               <NavLink to={"/"} className={cx(className)} {...others} />
@@ -20,8 +20,8 @@ export function AppLayout() {
               Planner
             </Title>
           </UnstyledButton>
-        </Group>
-        <div className={"headerGroup"}>
+        </nav>
+        <nav className={"navGroup"}>
           <div className={"headerMenu"}>
             <UnstyledButton
               className={"menuButton"}
@@ -50,7 +50,7 @@ export function AppLayout() {
               </Title>
             </UnstyledButton>
           </div>
-        </div>
+        </nav>
       </header>
       <main className={"main"}>
         <Outlet/>

@@ -1,6 +1,8 @@
 import { Text, Title } from '@mantine/core'
 import React from 'react'
 
+// TODO: Remove mantine components and use html tags instead
+
 interface CourseInfoProps {
   selectedCourse: Element | null;
 }

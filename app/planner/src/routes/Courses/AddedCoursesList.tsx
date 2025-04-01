@@ -5,6 +5,8 @@ import React from 'react'
 import { CourseItem } from './CoursesList.tsx'
 import "@/routes/Courses/Courses.css";
 
+// TODO: to be refactored
+
 interface AddedCoursesListProps {
   setAddedCourses: (course: { [key:string]: string }) => void;
   setSelectedCourse: (course: Element) => void;

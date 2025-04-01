@@ -3,12 +3,12 @@ import { ScrollArea } from "@mantine/core"
 import React from 'react';
 
 import { useAppData } from "@/components/Contexts/StateProvider.tsx"
-import { SubjectList } from "./SubjectList"
-import { CoursesList } from "./CoursesView/CoursesList.tsx"
-import { CourseInfo } from "./CoursesView/CourseInfo.tsx"
-import { AddedCoursesList } from "@/routes/Courses/CoursesView/AddedCoursesList.tsx";
+import { SubjectList } from "./SubjectList.tsx"
+import { CoursesList } from "./CoursesList.tsx"
+import { CourseInfo } from "./CourseInfo.tsx"
+import { AddedCoursesList } from "@/routes/Courses/AddedCoursesList.tsx";
 
-import "@/routes/Panel.css"
+import "@/routes/Courses/Panel.css"
 import "@/routes/Courses/Courses.css"
 
 export function Courses() {
