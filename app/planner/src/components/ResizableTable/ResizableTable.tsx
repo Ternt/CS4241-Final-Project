@@ -157,31 +157,14 @@ export const ResizableTable = React.memo(function ResizableTable(
 
   return (
     <>
-      <div>
-        <div>{resizingColumn}</div>
-        <div>{(isResizing) ? "true" : "false"}</div>
-        <div>{tableWidth}</div>
-        {columns.map(({ accessor, width }) => {
-          if (!accessor || !width) {
-            return;
-          }
-          return <div key={accessor + width}>{width}</div>
-        })}
-      </div>
-      <table className={'courseContainer'}>
-        <thead
-          ref={tableRef}
-          className={'courseHeader'}>
-        <tr key={'header'}>
-          {columns.map(({ header, resizable, width, id }) => {
+      <div className={'courseContainer'}>
+        <div ref={tableRef} className={'courseHeader'}>
+          {columns.map(({ header, resizable, id }) => {
             return (
-              <th
+              <div
                 key={header}
                 style={{
                   position: 'relative',
-                  width: width,
-                  minWidth: width,
-                  maxWidth: width,
                 }}>
                 {header}
                 {!resizable ? undefined :
@@ -191,12 +174,10 @@ export const ResizableTable = React.memo(function ResizableTable(
                     onMouseDown={handleMouseDown}
                   />
                 }
-              </th>
+              </div>
             )
           })}
-        </tr>
-        </thead>
-        <tbody>
+        </div>
         {/*{data.map((data: CourseType) => (*/}
         {/*  <tr key={data.subject + data.code}>*/}
         {/*    {columns.map(({ accessor }) => {*/}
@@ -205,8 +186,7 @@ export const ResizableTable = React.memo(function ResizableTable(
         {/*    })}*/}
         {/*  </tr>*/}
         {/*))}*/}
-        </tbody>
-      </table>
+      </div>
     </>
   )
 });

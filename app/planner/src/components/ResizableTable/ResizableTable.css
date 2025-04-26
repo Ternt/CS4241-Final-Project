@@ -4,3 +4,7 @@ tr {
     margin: 0;
     padding: 0;
 }
+
+.courseHeader {
+    display: flex;
+}
